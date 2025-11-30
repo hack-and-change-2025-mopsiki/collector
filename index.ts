@@ -409,6 +409,7 @@ class Collector {
 
           await Promise.allSettled([
             fetch(
+              // TODO: rm
               `https://tables.mws.ru/fusion/v1/datasheets/dstH8ioXFi7aHHyiUe/records?viewId=viwN17cmf3JQe&fieldKey=name`,
               {
                 method: "PATCH",
@@ -420,6 +421,7 @@ class Collector {
               }
             ),
             fetch(
+              // TODO: rm
               `https://tables.mws.ru/fusion/v1/datasheets/dstH8ioXFi7aHHyiUe/records?viewId=viwN17cmf3JQe&fieldKey=name`,
               {
                 method: "POST",
@@ -485,6 +487,7 @@ class Collector {
 
       return await Promise.allSettled([
         fetch(
+          // TODO: rm
           `https://tables.mws.ru/fusion/v1/datasheets/${MWS_TABLE_ID}/records?viewId=viwGMvDqZHFgN&fieldKey=name`,
           {
             method: "PATCH",
@@ -496,6 +499,7 @@ class Collector {
           }
         ),
         fetch(
+          // TODO: rm
           `https://tables.mws.ru/fusion/v1/datasheets/${MWS_TABLE_ID}/records?viewId=viwGMvDqZHFgN&fieldKey=name`,
           {
             method: "POST",
@@ -521,6 +525,7 @@ class Collector {
 
       while (hasMore) {
         const url = new URL(
+          // TODO: rm
           `https://tables.mws.ru/fusion/v1/datasheets/dstH8ioXFi7aHHyiUe/records`
         );
         url.searchParams.set("viewId", "viwN17cmf3JQe");
@@ -582,6 +587,7 @@ class Collector {
 
     while (hasMore) {
       const url = new URL(
+        // TODO: rm
         `https://tables.mws.ru/fusion/v1/datasheets/${MWS_TABLE_ID}/records`
       );
       url.searchParams.set("viewId", MWS_POSTS_TABLE);
@@ -809,11 +815,7 @@ const tgCollector = new Collector(new TgSource(), {
   apiKey: MWS_TABLES_API_KEY,
 });
 
-const collectors = [
-  habrCollector,
-  tgCollector,
-  vcCollector,
-];
+const collectors = [habrCollector, tgCollector, vcCollector];
 
 const collect = async (collectors: Collector[]) => {
   for (const collector of collectors) {
@@ -860,9 +862,9 @@ const job = new CronJob("0 * * * *", async () => {
   } catch (error) {
     console.error("Сбор завершён с ошибкой:", error);
   }
-})
+});
 
 app.listen(3000, async () => {
   job.start();
-  console.log("Запустились")
+  console.log("Запустились");
 });
